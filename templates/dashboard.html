@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | EyeCare AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center text-white"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg></div>
+        <h1 class="text-xl font-bold text-gray-900">EyeCare AI — Dashboard</h1>
+      </div>
+      <nav class="flex items-center gap-3">
+        <a href="{{ url_for('home') }}" class="px-4 py-2 text-sm text-gray-600 hover:text-indigo-600 font-medium transition">Home</a>
+        <a href="{{ url_for('patients_list') }}" class="px-4 py-2 text-sm bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl font-medium transition"><span class="inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/></svg> Patients</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-6 py-8">
+
+    <!-- Stat Cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mb-10">
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <p class="text-sm text-gray-500 mb-1">Total Patients</p>
+        <p class="text-4xl font-bold text-indigo-600">{{ total_patients }}</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <p class="text-sm text-gray-500 mb-1">Total Diagnoses</p>
+        <p class="text-4xl font-bold text-purple-600">{{ total_predictions }}</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <p class="text-sm text-gray-500 mb-1">Disease Types</p>
+        <p class="text-4xl font-bold text-rose-600">3</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <p class="text-sm text-gray-500 mb-1">AI Model</p>
+        <p class="text-xl font-bold text-emerald-600 mt-1">EfficientNetB0</p>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 mb-10">
+
+      <!-- Disease Count Chart -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Diagnosis Distribution</h3>
+        {% if disease_counts %}
+        <canvas id="diseaseChart" height="220"></canvas>
+        {% else %}
+        <div class="h-56 flex items-center justify-center text-gray-400">
+          <div class="text-center">
+            <div class="text-5xl mb-3"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z"/><path d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z"/></svg></div>
+            <p>No predictions yet</p>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h3 class="text-lg font-bold text-gray-900 mb-5">Quick Actions</h3>
+        <div class="space-y-3">
+          <a href="{{ url_for('disease_prediction') }}"
+             class="flex items-center gap-4 p-4 bg-red-50 hover:bg-red-100 border border-red-100 rounded-2xl transition">
+            <span class="text-3xl"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19.428 15.428a2 2 0 0 0-1.022-.547l-2.387-.477a6 6 0 0 0-3.86.517l-.318.158a6 6 0 0 1-3.86.517L6.05 15.21a2 2 0 0 0-1.806.547M8 4h8l-1 1v5.172a2 2 0 0 0 .586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 0 0 9 10.172V5L8 4Z"/></svg></span>
+            <div>
+              <p class="font-semibold text-red-700">Diabetic Retinopathy</p>
+              <p class="text-xs text-red-400">Upload retinal image for analysis</p>
+            </div>
+            <span class="ml-auto text-red-400">→</span>
+          </a>
+          <a href="{{ url_for('disease_prediction2') }}"
+             class="flex items-center gap-4 p-4 bg-amber-50 hover:bg-amber-100 border border-amber-100 rounded-2xl transition">
+            <span class="text-3xl"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.25 15a4.5 4.5 0 0 0 4.5 4.5H18a3.75 3.75 0 0 0 1.332-7.257 3 3 0 0 0-3.758-3.848 5.25 5.25 0 0 0-10.233 2.33A4.502 4.502 0 0 0 2.25 15Z"/></svg>️</span>
+            <div>
+              <p class="font-semibold text-amber-700">Cataract Detection</p>
+              <p class="text-xs text-amber-400">Upload eye image for analysis</p>
+            </div>
+            <span class="ml-auto text-amber-400">→</span>
+          </a>
+          <a href="{{ url_for('disease_prediction3') }}"
+             class="flex items-center gap-4 p-4 bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 rounded-2xl transition">
+            <span class="text-3xl"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>️</span>
+            <div>
+              <p class="font-semibold text-emerald-700">Glaucoma Detection</p>
+              <p class="text-xs text-emerald-400">Upload optic disc image for analysis</p>
+            </div>
+            <span class="ml-auto text-emerald-400">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Predictions Table -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="px-6 py-5 border-b flex items-center justify-between">
+        <h3 class="text-lg font-bold text-gray-900">Recent Diagnoses</h3>
+        <a href="{{ url_for('patients_list') }}" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">View All Patients →</a>
+      </div>
+      {% if recent %}
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-50 text-gray-500 uppercase text-xs tracking-wider">
+            <tr>
+              <th class="px-6 py-3 text-left">ID</th>
+              <th class="px-6 py-3 text-left">Disease Type</th>
+              <th class="px-6 py-3 text-left">Prediction</th>
+              <th class="px-6 py-3 text-left">Confidence</th>
+              <th class="px-6 py-3 text-left">Date</th>
+              <th class="px-6 py-3 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            {% for r in recent %}
+            <tr class="hover:bg-gray-50 transition">
+              <td class="px-6 py-4 text-gray-400">#{{ r.id }}</td>
+              <td class="px-6 py-4">
+                {% if r.disease_type == 'diabetic_retinopathy' %}
+                <span class="px-2 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-medium">DR</span>
+                {% elif r.disease_type == 'cataract' %}
+                <span class="px-2 py-1 bg-amber-100 text-amber-700 rounded-lg text-xs font-medium">Cataract</span>
+                {% else %}
+                <span class="px-2 py-1 bg-teal-100 text-teal-700 rounded-lg text-xs font-medium">Glaucoma</span>
+                {% endif %}
+              </td>
+              <td class="px-6 py-4 font-semibold text-gray-800">{{ r.prediction.replace('_',' ').title() }}</td>
+              <td class="px-6 py-4 text-gray-600">{{ r.confidence }}</td>
+              <td class="px-6 py-4 text-gray-400">{{ r.diagnosed_at[:10] }}</td>
+              <td class="px-6 py-4">
+                <div class="flex gap-2">
+                  <a href="{{ url_for('patient_detail', patient_id=r.patient_id) }}"
+                     class="px-3 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-xs font-medium hover:bg-indigo-100 transition">Patient</a>
+                  <a href="{{ url_for('download_report', pred_id=r.id) }}"
+                     class="px-3 py-1 bg-gray-100 text-gray-600 rounded-lg text-xs font-medium hover:bg-gray-200 transition">PDF</a>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="text-center py-16 text-gray-400">
+        <div class="text-5xl mb-3"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg></div>
+        <p>No diagnoses yet. Start by uploading an eye image.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <script>
+    {% if disease_counts %}
+    const ctx = document.getElementById('diseaseChart').getContext('2d');
+    const labels = {{ disease_counts.keys() | list | tojson }};
+    const data   = {{ disease_counts.values() | list | tojson }};
+    const colors = [
+      '#4f46e5','#dc2626','#d97706','#16a34a','#0d9488',
+      '#7c3aed','#db2777','#2563eb','#65a30d'
+    ];
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: labels.map(l => l.replace(/_/g,' ')),
+        datasets: [{
+          data: data,
+          backgroundColor: colors.slice(0, labels.length),
+          borderWidth: 2,
+          borderColor: '#fff'
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { position: 'bottom', labels: { font: { size: 12 } } }
+        },
+        cutout: '60%'
+      }
+    });
+    {% endif %}
+  </script>
+</body>
+</html>

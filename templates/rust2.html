@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cataract Detection | Upload Image</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .hero-bg {
+      background: linear-gradient(135deg, #451a03, #78350f);
+    }
+    .upload-card {
+      transition: all 0.4s ease;
+    }
+    .upload-card:hover {
+      transform: translateY(-8px);
+    }
+    .preview-image {
+      max-height: 320px;
+      object-fit: contain;
+      border-radius: 16px;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm border-b">
+    <div class="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center text-white"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M2.25 15a4.5 4.5 0 0 0 4.5 4.5H18a3.75 3.75 0 0 0 1.332-7.257 3 3 0 0 0-3.758-3.848 5.25 5.25 0 0 0-10.233 2.33A4.502 4.502 0 0 0 2.25 15Z"/></svg></div>
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">EyeCare AI</h1>
+          <p class="text-xs text-gray-500 -mt-1">Powered by Deep Learning</p>
+        </div>
+      </div>
+      <a href="/" class="text-sm font-medium text-gray-600 hover:text-amber-600 transition">← Back to Home</a>
+    </div>
+  </header>
+
+  <!-- Main Upload Section -->
+  <div class="hero-bg py-16">
+    <div class="max-w-2xl mx-auto px-6">
+      <div class="text-center mb-10">
+        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white text-sm font-medium px-5 py-2 rounded-full mb-4">
+          <span class="w-3 h-3 bg-amber-400 rounded-full animate-pulse"></span>
+          CATARACT DETECTION
+        </div>
+        <h2 class="text-4xl md:text-5xl font-bold text-white leading-tight">
+          Upload Eye Image
+        </h2>
+        <p class="text-amber-100 mt-4 text-lg max-w-md mx-auto">
+          Our AI model will analyze your eye image for signs of Cataract
+        </p>
+      </div>
+
+      <!-- Upload Card -->
+      <div class="upload-card bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <div class="bg-gradient-to-r from-amber-600 to-orange-600 px-8 py-6 text-white">
+          <h3 class="text-xl font-semibold flex items-center gap-3">
+            <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-white/20"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"/><path d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"/></svg></span> 
+            Upload Eye / Lens Image
+          </h3>
+          <p class="text-amber-100 text-sm mt-1">
+            Please upload a clear, well-focused image of the eye
+          </p>
+        </div>
+
+        <div class="p-8">
+          <form method="post" enctype="multipart/form-data" class="space-y-8">
+
+            <!-- Patient Information -->
+            <div class="bg-amber-50 border border-amber-100 rounded-2xl p-6 space-y-4">
+              <h4 class="text-sm font-semibold text-amber-700 uppercase tracking-wide">Patient Information</h4>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="col-span-2">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                  <input type="text" name="name" placeholder="Enter patient name"
+                         class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Age</label>
+                  <input type="number" name="age" placeholder="Age" min="1" max="120"
+                         class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+                  <select name="gender"
+                          class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="col-span-2">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                  <input type="text" name="contact" placeholder="Enter phone number"
+                         class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+                </div>
+              </div>
+            </div>
+
+            <!-- File Input -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-3">
+                Select Eye Image
+              </label>
+              <div class="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:border-amber-300 transition cursor-pointer"
+                   onclick="document.getElementById('file-input').click()">
+                <input type="file" id="file-input" name="file" accept="image/*" 
+                       onchange="preview_image(event)" required 
+                       class="hidden" />
+                
+                <div id="upload-placeholder" class="py-6">
+                  <div class="mx-auto w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center text-4xl mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>️
+                  </div>
+                  <p class="text-gray-600 font-medium">Click or drag image here</p>
+                  <p class="text-xs text-gray-500 mt-1">Supported formats: JPG, PNG, JPEG</p>
+                </div>
+
+                <img id="output-image" class="preview-image mx-auto hidden" alt="Preview" />
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                    class="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-semibold py-4 rounded-2xl text-lg transition-all duration-300 flex items-center justify-center gap-3">
+              <span>Analyze Image for Cataract</span>
+              <span class="text-xl">→</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tips -->
+        <div class="bg-gray-50 border-t px-8 py-6 text-xs text-gray-500">
+          <strong class="text-gray-700 block mb-2">For Best Results:</strong>
+          <ul class="list-disc list-inside space-y-1">
+            <li>Use a clear, high-resolution image of the eye</li>
+            <li>Ensure good lighting and proper focus on the lens</li>
+            <li>Avoid images with glare or heavy reflection</li>
+            <li>Upload only one image per prediction</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="text-center text-gray-500 text-sm mt-8">
+        This tool is for screening purposes only. Always consult an ophthalmologist for medical diagnosis.
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white py-8 border-t">
+    <div class="max-w-5xl mx-auto px-6 text-center text-gray-500 text-sm">
+      © 2026 EyeCare AI — Cataract Detection using Deep Learning
+    </div>
+  </footer>
+
+  <script>
+    function preview_image(event) {
+      const reader = new FileReader();
+      const output = document.getElementById('output-image');
+      const placeholder = document.getElementById('upload-placeholder');
+
+      reader.onload = function () {
+        output.src = reader.result;
+        output.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  </script>
+</body>
+</html>

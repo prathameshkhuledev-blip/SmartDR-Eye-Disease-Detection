@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prediction Result | Diabetic Retinopathy Detection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-gray-50 min-h-screen pb-24">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-red-600 to-rose-600 rounded-2xl flex items-center justify-center text-white"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19.428 15.428a2 2 0 0 0-1.022-.547l-2.387-.477a6 6 0 0 0-3.86.517l-.318.158a6 6 0 0 1-3.86.517L6.05 15.21a2 2 0 0 0-1.806.547M8 4h8l-1 1v5.172a2 2 0 0 0 .586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 0 0 9 10.172V5L8 4Z"/></svg></div>
+        <div>
+          <h1 class="text-xl font-bold text-gray-900">EyeCare AI</h1>
+          <p class="text-xs text-gray-500">Diabetic Retinopathy Detection</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="{{ url_for('patients_list') }}" class="px-4 py-2 text-sm bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl font-medium transition"><span class="inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/></svg> All Patients</span></a>
+        <a href="{{ url_for('disease_prediction') }}" class="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-xl font-medium text-gray-700 transition">← New Analysis</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-4xl mx-auto px-6 pt-8">
+
+    <!-- Result Banner -->
+    {% if is_healthy %}
+    <div class="bg-gradient-to-r from-emerald-50 to-green-50 border-2 border-emerald-300 rounded-3xl px-10 py-10 text-center mb-6">
+      <div class="flex items-center justify-center w-20 h-20 bg-emerald-100 rounded-full mx-auto mb-3"><svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/</svg></div>
+      <h2 class="text-4xl font-bold text-emerald-700 mb-1">{{ prediction }}</h2>
+      <p class="text-emerald-600 text-lg">No signs of Diabetic Retinopathy detected</p>
+      <p class="mt-2 text-sm text-emerald-500">AI Confidence: <strong>{{ confidence }}</strong></p>
+    </div>
+    {% else %}
+    <div class="bg-gradient-to-r from-red-50 to-rose-50 border-2 border-red-300 rounded-3xl px-10 py-10 text-center mb-6">
+      <div class="text-6xl mb-3"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg></div>
+      <h2 class="text-4xl font-bold text-red-700 mb-1">{{ prediction }}</h2>
+      <p class="text-red-600 text-lg">Diabetic Retinopathy Detected</p>
+      <p class="mt-2 text-sm text-red-500">AI Confidence: <strong>{{ confidence }}</strong></p>
+    </div>
+    {% endif %}
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap gap-3 justify-center mb-8">
+      <a href="{{ url_for('download_report', pred_id=pred_id) }}"
+         class="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-6 py-3 rounded-2xl font-semibold transition shadow-lg">
+        <span class="inline-flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg> Download PDF Report</span>
+      </a>
+      <a href="{{ url_for('patient_detail', patient_id=patient_id) }}"
+         class="flex items-center gap-2 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 px-6 py-3 rounded-2xl font-semibold transition">
+        <span class="inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg> View Patient History</span>
+      </a>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+
+      <!-- Analyzed Image -->
+      <div class="px-8 py-8 bg-gray-50 border-b text-center">
+        <p class="text-sm font-semibold text-gray-500 mb-4 uppercase tracking-wide">Analyzed Retinal Image</p>
+        <img src="{{ url_for('static', filename='output_image.png') }}"
+             alt="Retinal Image"
+             class="mx-auto rounded-2xl shadow-lg max-h-72 object-contain">
+      </div>
+
+      <div class="p-8">
+        {% if not is_healthy %}
+        <!-- Diagnosis Info + Treatment -->
+        <div class="grid md:grid-cols-2 gap-8 mb-10">
+          <div>
+            <h3 class="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2"><span class="inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg> Diagnosis Information</span></h3>
+            <div class="space-y-5">
+              <div class="bg-gray-50 rounded-2xl p-4">
+                <p class="text-xs font-semibold text-gray-400 uppercase mb-1">Detected Condition</p>
+                <p class="text-xl font-bold text-red-700">{{ prediction }}</p>
+              </div>
+              <div class="bg-gray-50 rounded-2xl p-4">
+                <p class="text-xs font-semibold text-gray-400 uppercase mb-1">AI Confidence</p>
+                <p class="text-lg font-bold text-gray-700">{{ confidence }}</p>
+              </div>
+              <div class="bg-gray-50 rounded-2xl p-4">
+                <p class="text-xs font-semibold text-gray-400 uppercase mb-1">Possible Cause</p>
+                <p class="text-gray-700 text-sm leading-relaxed">{{ cause }}</p>
+              </div>
+              <div class="bg-gray-50 rounded-2xl p-4">
+                <p class="text-xs font-semibold text-gray-400 uppercase mb-1">Recommended Treatment</p>
+                <p class="text-gray-700 text-sm leading-relaxed">{{ treatment }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2"><span class="inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23-.693L5 14.5m14.8.8 1.402 1.402c1 1 .03 2.798-1.414 2.798H4.212c-1.444 0-2.414-1.798-1.414-2.798L4 15.3"/></svg> Treatment Approaches</span></h3>
+            <div class="space-y-4">
+              <div class="bg-rose-50 border border-rose-100 p-5 rounded-2xl">
+                <p class="font-bold text-rose-700 mb-1 text-sm"><span class="inline-flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 0 1-1.161.886l-.143.048a1.107 1.107 0 0 0-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 0 1-1.652.928l-.679-.906a1.125 1.125 0 0 0-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 0 0-8.862 12.872M12.75 3.031a9 9 0 0 1 6.69 14.036m0 0-.177-.529A2.249 2.249 0 0 0 17.128 15H16.5l-.324-.324a1.453 1.453 0 0 0-2.328.377l-.036.073a1.586 1.586 0 0 1-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643"/></svg> Homeopathy</span></p>
+                <p class="text-sm text-gray-600">{{ homeopathy }}</p>
+              </div>
+              <div class="bg-blue-50 border border-blue-100 p-5 rounded-2xl">
+                <p class="font-bold text-blue-700 mb-1 text-sm"><span class="inline-flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg> Allopathy</span></p>
+                <p class="text-sm text-gray-600">{{ allopathy }}</p>
+              </div>
+              <div class="bg-emerald-50 border border-emerald-100 p-5 rounded-2xl">
+                <p class="font-bold text-emerald-700 mb-1 text-sm"><span class="inline-flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/></svg> Ayurveda</span></p>
+                <p class="text-sm text-gray-600">{{ ayurveda }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hospitals & Cost -->
+        <div class="border-t pt-8">
+          <h3 class="text-lg font-bold text-gray-900 mb-5"><span class="inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg> Hospitals &amp; Cost Estimate</span></h3>
+          <div class="grid md:grid-cols-2 gap-5 mb-5">
+            <div class="bg-amber-50 border border-amber-100 rounded-2xl p-6">
+              <p class="font-bold text-amber-700 mb-3"><span class="inline-flex items-center gap-1.5 font-bold"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg> In India</span></p>
+              <p class="text-gray-600 text-sm mb-4">{{ india_hospitals }}</p>
+              <div class="border-t border-amber-200 pt-3">
+                <span class="text-xs text-gray-500 block">Estimated Cost</span>
+                <span class="text-xl font-bold text-gray-800">{{ cost_india }}</span>
+              </div>
+            </div>
+            <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6">
+              <p class="font-bold text-blue-700 mb-3"><span class="inline-flex items-center gap-1.5 font-bold"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg> In USA</span></p>
+              <p class="text-gray-600 text-sm mb-4">{{ usa_hospitals }}</p>
+              <div class="border-t border-blue-200 pt-3">
+                <span class="text-xs text-gray-500 block">Estimated Cost</span>
+                <span class="text-xl font-bold text-gray-800">{{ cost_usa }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-2xl p-6 text-center">
+            <p class="text-amber-700 font-semibold mb-1">Treatment Success Rate</p>
+            <p class="text-3xl font-bold text-amber-900">{{ success_rate }}</p>
+          </div>
+        </div>
+
+        {% else %}
+        <!-- Healthy -->
+        <div class="text-center py-12">
+          <p class="text-2xl font-bold text-emerald-700 mb-3">Your retina appears healthy!</p>
+          <p class="text-gray-600">Continue regular eye check-ups and maintain good diabetes control.</p>
+          <div class="mt-8 grid grid-cols-3 gap-4 max-w-md mx-auto text-sm text-gray-600">
+            <div class="bg-emerald-50 rounded-2xl p-4"><span class="inline-flex items-center gap-1 justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg> Healthy Retina</span></div>
+            <div class="bg-emerald-50 rounded-2xl p-4"><span class="inline-flex items-center gap-1 justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/></svg> Annual Checkup</span></div>
+            <div class="bg-emerald-50 rounded-2xl p-4"><span class="inline-flex items-center gap-1 justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/></svg> Stay Safe</span></div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="mt-8 text-center text-sm text-gray-400 max-w-2xl mx-auto pb-4">
+      <span class="inline-flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg> This is an AI</span> screening tool for informational purposes only.
+      Please consult a qualified ophthalmologist for proper medical diagnosis and treatment.
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="fixed bottom-0 left-0 right-0 bg-white border-t py-3">
+    <div class="max-w-4xl mx-auto px-6 text-center text-gray-400 text-xs">
+      © 2026 EyeCare AI — Diabetic Retinopathy Detection using Deep Learning
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Eye Disease Detection | AI-Powered Diagnosis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .hero-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
+    }
+    .card-hover {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+    .gradient-text {
+      background: linear-gradient(90deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center text-white"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg></div>
+        <h1 class="text-2xl font-bold tracking-tight">EyeCare AI</h1>
+      </div>
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a href="{{ url_for('home') }}" class="hover:text-indigo-600 transition">Home</a>
+        <a href="#services" class="hover:text-indigo-600 transition">Services</a>
+        <a href="{{ url_for('dashboard') }}" class="hover:text-indigo-600 transition"><span class="inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z"/><path d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z"/></svg> Dashboard</span></a>
+        <a href="{{ url_for('patients_list') }}" class="hover:text-indigo-600 transition"><span class="inline-flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/></svg> Patients</span></a>
+      </nav>
+      <div class="text-sm font-medium text-gray-600">Powered by Deep Learning</div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-bg text-white py-24">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <h2 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
+        Early Detection of Eye Diseases<br>
+        <span class="gradient-text">Using Artificial Intelligence</span>
+      </h2>
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-10">
+        Upload clear retinal or eye images and get instant, accurate analysis for 
+        <strong>Diabetic Retinopathy, Cataract, and Glaucoma</strong> using advanced deep learning models.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#services" 
+           class="bg-white text-gray-900 px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-gray-100 transition flex items-center justify-center gap-2">
+          Start Diagnosis Now
+        </a>
+        <a href="#" 
+           class="border border-white/50 hover:bg-white/10 px-8 py-4 rounded-2xl font-medium text-lg transition">
+          Learn More
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <span class="inline-block px-4 py-1.5 bg-indigo-100 text-indigo-700 text-sm font-semibold rounded-full mb-4">
+          OUR SERVICES
+        </span>
+        <h3 class="text-4xl font-bold text-gray-900 mb-4">AI-Powered Eye Disease Detection</h3>
+        <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+          Our advanced deep learning models analyze retinal images with high accuracy to help detect serious eye conditions at an early stage.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        
+        <!-- Diabetic Retinopathy -->
+        <div class="bg-white border border-gray-100 rounded-3xl overflow-hidden card-hover">
+          <div class="h-64 bg-gradient-to-br from-red-500 to-rose-600 flex items-center justify-center">
+            <span class="flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M19.428 15.428a2 2 0 0 0-1.022-.547l-2.387-.477a6 6 0 0 0-3.86.517l-.318.158a6 6 0 0 1-3.86.517L6.05 15.21a2 2 0 0 0-1.806.547M8 4h8l-1 1v5.172a2 2 0 0 0 .586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 0 0 9 10.172V5L8 4Z"/></svg></span>
+          </div>
+          <div class="p-8">
+            <h4 class="text-2xl font-semibold mb-3 text-gray-900">Diabetic Retinopathy</h4>
+            <p class="text-gray-600 mb-8 leading-relaxed">
+              Detects damage to the blood vessels in the retina caused by diabetes. 
+              Early detection can prevent vision loss.
+            </p>
+            <a href="{{ url_for('disease_prediction') }}" 
+               class="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center py-4 rounded-2xl font-semibold hover:from-indigo-700 hover:to-purple-700 transition">
+              Upload Retinal Image
+            </a>
+          </div>
+        </div>
+
+        <!-- Cataract -->
+        <div class="bg-white border border-gray-100 rounded-3xl overflow-hidden card-hover">
+          <div class="h-64 bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
+            <span class="flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M2.25 15a4.5 4.5 0 0 0 4.5 4.5H18a3.75 3.75 0 0 0 1.332-7.257 3 3 0 0 0-3.758-3.848 5.25 5.25 0 0 0-10.233 2.33A4.502 4.502 0 0 0 2.25 15Z"/></svg></span>
+          </div>
+          <div class="p-8">
+            <h4 class="text-2xl font-semibold mb-3 text-gray-900">Cataract Detection</h4>
+            <p class="text-gray-600 mb-8 leading-relaxed">
+              Identifies clouding of the eye's natural lens. Our AI model helps detect cataracts early for timely treatment.
+            </p>
+            <a href="{{ url_for('disease_prediction2') }}" 
+               class="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center py-4 rounded-2xl font-semibold hover:from-indigo-700 hover:to-purple-700 transition">
+              Upload Eye Image
+            </a>
+          </div>
+        </div>
+
+        <!-- Glaucoma -->
+        <div class="bg-white border border-gray-100 rounded-3xl overflow-hidden card-hover">
+          <div class="h-64 bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+            <span class="flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg></span>
+          </div>
+          <div class="p-8">
+            <h4 class="text-2xl font-semibold mb-3 text-gray-900">Glaucoma Detection</h4>
+            <p class="text-gray-600 mb-8 leading-relaxed">
+              Detects optic nerve damage often caused by high eye pressure. 
+              Early diagnosis is critical to prevent irreversible vision loss.
+            </p>
+            <a href="{{ url_for('disease_prediction3') }}" 
+               class="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center py-4 rounded-2xl font-semibold hover:from-indigo-700 hover:to-purple-700 transition">
+              Upload Image for Analysis
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="py-20 bg-gray-100">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div>
+          <h3 class="text-4xl font-bold mb-8">Why Early Detection Matters</h3>
+          <div class="space-y-8">
+            <div class="flex gap-6">
+              <div class="w-12 h-12 bg-green-100 rounded-2xl flex-shrink-0 flex items-center justify-center text-green-600"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/></svg></div>
+              <div>
+                <h5 class="font-semibold text-xl mb-2">Fast & Accurate</h5>
+                <p class="text-gray-600">Our deep learning models provide results in seconds with high precision.</p>
+              </div>
+            </div>
+            <div class="flex gap-6">
+              <div class="w-12 h-12 bg-blue-100 rounded-2xl flex-shrink-0 flex items-center justify-center text-blue-600"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg></div>
+              <div>
+                <h5 class="font-semibold text-xl mb-2">Non-Invasive</h5>
+                <p class="text-gray-600">Just upload a clear image — no need for painful procedures.</p>
+              </div>
+            </div>
+            <div class="flex gap-6">
+              <div class="w-12 h-12 bg-purple-100 rounded-2xl flex-shrink-0 flex items-center justify-center text-purple-600"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z"/></svg></div>
+              <div>
+                <h5 class="font-semibold text-xl mb-2">Early Intervention</h5>
+                <p class="text-gray-600">Detect diseases before symptoms appear and save your vision.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white p-10 rounded-3xl shadow-xl">
+          <h4 class="text-2xl font-semibold mb-6">How Our AI Works</h4>
+          <ol class="space-y-6 text-gray-700">
+            <li class="flex gap-4">
+              <span class="font-mono bg-gray-100 w-8 h-8 rounded-xl flex items-center justify-center font-bold">1</span>
+              <div>Upload a high-quality retinal or eye image</div>
+            </li>
+            <li class="flex gap-4">
+              <span class="font-mono bg-gray-100 w-8 h-8 rounded-xl flex items-center justify-center font-bold">2</span>
+              <div>Our model analyzes the image using state-of-the-art CNNs</div>
+            </li>
+            <li class="flex gap-4">
+              <span class="font-mono bg-gray-100 w-8 h-8 rounded-xl flex items-center justify-center font-bold">3</span>
+              <div>Get instant prediction with confidence score</div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-12">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <div class="flex items-center justify-center gap-3 mb-6">
+        <div class="w-9 h-9 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center text-white"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ><path d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg></div>
+        <span class="text-2xl font-bold text-white">EyeCare AI</span>
+      </div>
+      <p class="text-sm">© 2026 EyeCare AI — Advanced Deep Learning for Eye Disease Detection</p>
+      <p class="text-xs mt-4 text-gray-500">For educational and research purposes only. Consult a qualified ophthalmologist for medical advice.</p>
+    </div>
+  </footer>
+
+  <!-- Tailwind Script -->
+  <script>
+    tailwind.config = {
+      content: [],
+      theme: {
+        extend: {}
+      }
+    }
+  </script>
+</body>
+</html>
